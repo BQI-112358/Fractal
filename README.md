@@ -1,2 +1,2 @@
 # fractal
-fractal for processing python
+fractals for Processing3 Python mode
