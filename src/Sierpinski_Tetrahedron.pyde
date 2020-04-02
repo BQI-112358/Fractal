@@ -1,38 +1,15 @@
-level = 5     # たぶん8くらいが限界
-
-def setup():
-    fullScreen(P3D)
-    noStroke()
-
-def draw():
-    global d
-    camera(256*cos(TWO_PI*mouseX/width), 256*sin(TWO_PI*mouseX/width), 256, 0, 0, 0, 0, 0, -1)
-    background(0)
-    draw_fractal(level, 0, 0, 0, 256)
-    
-def draw_fractal(lv, x, y, z, l):
-    if not lv:
-        fill(128-x, 128-y, 128-z)
-        beginShape(TRIANGLE_STRIP)
-        vertex(x-l/2, y-l/2, z-l/2)
-        vertex(x+l/2, y-l/2, z+l/2)
-        vertex(x-l/2, y+l/2, z+l/2)
-        vertex(x+l/2, y+l/2, z-l/2)
-        vertex(x-l/2, y-l/2, z-l/2)
-        vertex(x+l/2, y-l/2, z+l/2)        
-        endShape()
+def draw_st(depth, x, y, z, d):
+    if not d:
+        point(x, y, z)
         return
-    draw_fractal(lv-1, x-l/4, y-l/4, z-l/4, l/2)
-    draw_fractal(lv-1, x-l/4, y+l/4, z+l/4, l/2)
-    draw_fractal(lv-1, x+l/4, y-l/4, z+l/4, l/2)
-    draw_fractal(lv-1, x+l/4, y+l/4, z-l/4, l/2)
+    draw_st(depth-1, x-d, y-d, z-d, d/2)
+    draw_st(depth-1, x-d, y+d, z+d, d/2)
+    draw_st(depth-1, x+d, y-d, z+d, d/2)
+    draw_st(depth-1, x+d, y+d, z-d, d/2)
     
-def keyPressed():
-    global level
-    if keyCode == UP:
-        level = min(level+1, 10)
-    elif keyCode == DOWN:
-        level = max(level-1, 0)
+size(960, 960, P3D)
+camera(1024, 1024, 1024, 0, 0, 0, 1, 0, 0)
+draw_st(8, 0, 0, 0, 256)
         
 '''
 【補足】
